@@ -1,0 +1,4 @@
+.idea
+/__pycache__
+needleman_wunsh.py
+test_nw.py
