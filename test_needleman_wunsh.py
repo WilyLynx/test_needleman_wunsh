@@ -47,6 +47,26 @@ class TestNeedlemanWunsh(unittest.TestCase):
         al_1, al_2, s = make_alignment('T', 'AG', MATCH, MISMATCH, GAP)
         self.assertEqual(MISMATCH + GAP, s)
 
+    def test_border(self):
+        s_long = 'TGGGTA'
+        al_1, al_2, s = make_alignment('A', s_long, MATCH, MISMATCH, GAP)
+        self.assertEqual('-----A', al_1)
+        self.assertEqual(s_long, al_2)
+        self.assertEqual(MATCH + 5 * GAP, s)
+
+    def test_border_flip(self):
+        s_long = 'TGGGTA'
+        al_1, al_2, s = make_alignment(s_long, 'A', MATCH, MISMATCH, GAP)
+        self.assertEqual(s_long, al_1)
+        self.assertEqual('-----A', al_2)
+        self.assertEqual(MATCH + 5 * GAP, s)
+
+    def test_shifted(self):
+        al_1, al_2, s = make_alignment('ATG', 'GAT', MATCH, MISMATCH, GAP)
+        self.assertEqual('-ATG', al_1)
+        self.assertEqual('GAT-', al_2)
+        self.assertEqual(2 * MATCH + 2 * GAP, s)
+
     def test_complex_1(self):
         s_1WFN = 'GSSGSSGPQLVRTHEDVPGPVGHLSFSEILDTSLKVSWQEPGEKNGILTGYRISWEEYNRTNTRVTHYLPNVTLEYRVTGLTALTTYTIEVAAMTSKGQGQVSASTISSGVPPSGPSSG'
         s_1WFO = 'GSSGSSGRIGDGSPSHPPILERTLDDVPGPPMGILFPEVRTTSVRLIWQPPAAPNGIILAYQITHRLNTTTANTATVEVLAPSARQYTATGLKPESVYLFRITAQTRKGWGEAAEALVVTTEKRSGPSSG'
